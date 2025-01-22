@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gerenciar Clientes</title>
+  <link rel="stylesheet" href="../static/css/styleTJHome.css">
+  <link rel="icon" href="{{ url_for('static', filename='images/Logo.png') }}" type="image/png">
+  
+</head>
+<body>
+          
+  <img src="{{ url_for('static', filename='images/Textura inferior.png') }}" class="texturaB">
+  <img src="{{ url_for('static', filename='images/Textura superior.png') }}" class="texturaC">
+
+  <div class="top-bar">
+    <a href="/Home"> <!-- Link para a página inicial -->
+      <button>
+        <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024">
+          <path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path>
+        </svg>
+        <span>Voltar</span>
+      </button>
+    </a>
+  </div>
+  
+  <section class="patient-search">
+    <div class="content-wrapper">
+
+      <!-- Campo de busca no topo e centralizado -->
+      <form class="form">
+        <label for="search">
+          <input required="" autocomplete="off" placeholder="Procure clientes" id="search" name="search" type="text" value="{{ request.args.get('search', '') }}">
+            <div class="icon">
+                <svg stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="swap-on">
+                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linejoin="round" stroke-linecap="round"></path>
+                </svg>
+                <svg stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="swap-off">
+                    <path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linejoin="round" stroke-linecap="round"></path>
+                </svg>
+            </div>
+            <button type="button" class="close-btn" onclick="clearSearch()">
+              <svg viewBox="0 0 20 20" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                  <path clip-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" fill-rule="evenodd"></path>
+              </svg>
+          </button>
+        </label>
+      </form>
+  
+      <!-- Grid de pacientes com links para tornar os cartões clicáveis -->
+      <div class="patient-grid">
+    {% if clientes %}
+        {% for cliente in clientes %}        
+        <article class="patient-card" data-id="{{ cliente.IdCliente }}" onclick="goToDetailsPage(this)" style="cursor: pointer;">
+            <img src="{{ cliente.imagem if cliente.imagem else 'https://via.placeholder.com/100' }}" 
+                alt="Foto de {{ cliente.nome }}" class="patient-image">
+            <div class="patient-info">
+                <h2 class="patient-name">{{ cliente.nome }}</h2>
+                <p class="patient-details">Data de nascimento: {{ cliente.dtNascimento.strftime('%d/%m/%Y') if cliente.dtNascimento else 'N/A' }}</p>
+                <p class="patient-details">CPF: {{ cliente.cpf }}</p>
+                <p class="case-type">{{ cliente.causa }}</p>
+
+                <div class="patient-actions">
+                    <!-- Botão Editar -->
+                    <button class="edit-button" onclick="goToEditPage(event, '{{ cliente.IdCliente }}')">
+                        <svg class="edit-svgIcon" viewBox="0 0 512 512">
+                            <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Formulário de Exclusão (dentro do loop) -->
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="id_cliente" value="{{ cliente.IdCliente }}">
+                        <button type="submit" name="excluir" class="editt-button" onclick="return confirm('Você tem certeza que deseja excluir este cliente?')">
+                            <svg class="editt-svgIcon" viewBox="0 0 512 512">
+                                <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    {% else %}
+        <p>Nenhum cliente encontrado para este usuário.</p>
+    {% endif %}
+</div>
+
+{% if msg %}
+    <div class="alert">
+        <p>{{ msg }}</p>
+    </div>
+{% endif %}
+
+    
+      <div class="action-buttons">
+        <a class="register-button" href="{{ url_for('CadastroCliente') }}">Cadastrar clientes</a>
+        <a class="help-button" href="{{ url_for('TJDuvidas') }}">
+          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/1844febeb1e542a015fbe36f1c4f479643bfb9558e4e8a1cf1ddee5d247a0371?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+               alt="Ícone de ajuda" class="help-icon">
+          <span>TJ para dúvidas</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  <script>
+
+    // Redirecionar para a página de detalhes
+    function goToDetailsPage(article) {
+    const clientId = article.getAttribute('data-id');  // Pega o id do cliente do atributo 'data-id'
+    console.log(`Navigating to: /TJDuvidasClientes/${clientId}`);  // Verifique o log no console
+
+    window.location.href = `/TJDuvidasClientes/${clientId}`;  // Redireciona para a página com o ID correto
+}
+
+
+// Redirecionar para a página de edição
+function goToEditPage(event, clientId) {
+  event.stopPropagation(); // Evita que o clique no botão acione o redirecionamento do card
+  window.location.href = `/EditarCliente/${clientId}`;
+}
+
+// Redirecionar para a página de exclusão
+// Redirecionar para a página de exclusão
+function goToDeletePage(event, clientId) {
+  event.stopPropagation(); // Evita que o clique no botão acione o redirecionamento do card
+  window.location.href = `/ExcluirCliente/${clientId}`;
+}
+
+
+function confirmDelete(event, clienteId) {
+    event.stopPropagation(); // Evita que o clique no card seja acionado
+    const confirmDelete = confirm("Você tem certeza que deseja excluir este cliente?");
+    if (confirmDelete) {
+        // Redireciona para a rota de exclusão no backend
+        window.location.href = `/ExcluirCliente/${clienteId}`;
+    }
+}
+
+
+
+    function clearSearch() {
+        document.getElementById('search').value = ''; // Limpa o campo de busca
+        document.querySelector('.form').submit(); // Submete o formulário para atualizar os resultados
+    }
+
+
+
+  
+</script>
+  </body>
+  </html>

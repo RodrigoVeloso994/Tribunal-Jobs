@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de ADM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styleCadAdm.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.7-beta.19/jquery.inputmask.min.js"></script>
+    <link rel="icon" href="{{ url_for('static', filename='images/Logo.png') }}" type="image/png">
+
+</head>
+<body>
+    <img src="{{ url_for('static', filename='images/Textura inferiorr.png') }}" class="texturaBD">
+    <h1>Cadastro de ADM</h1>
+    <section class="container">
+        <form class="main-form" method="POST" action="{{ url_for('cadastroADM', cnpj=cnpj, cpfADM=cpfADM) }}" enctype="multipart/form-data">
+            <div class="form-wrapper">
+                <aside class="image-column">
+                    <div class="input-div" onclick="triggerUpload()">
+                        <input class="input" id="upload-input" type="file" name="imagem" accept=".jpg, .jpeg, .png" onchange="loadFile(event)">
+                        <img src="{{ url_for('static', filename='images/profile-pic.jpg') }}" alt="" class="profile-pic" id="profile-pic">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" stroke-linejoin="round" stroke-linecap="round" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icon" id="upload-icon">
+                            <polyline points="16 16 12 12 8 16"></polyline>
+                            <line y2="21" x2="12" y1="12" x1="12"></line>
+                            <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
+                            <polyline points="16 16 12 12 8 16"></polyline>
+                        </svg>
+                    </div>
+                </aside>
+                <div class="form-fields">
+                    <div class="group">
+                        <span>Nome</span>
+                        <input class="input" type="text" name="nome" placeholder="Nome" required>
+                    </div>
+                    <div class="group group-cpf">
+                        <span>CPF</span>
+                        <input class="input cpf-input" type="text" name="cpfADM" value="{{ cpfADM }}" readonly required>
+                    </div>
+                    <div class="group group-cnpj">
+                        <span>CNPJ</span>
+                        <input class="input" type="text" name="cnpj" value="{{ cnpj }}" readonly required>
+                    </div>
+                    <div class="group group-phone">
+                        <span>Telefone</span>
+                        <input class="input phone-input" type="text" name="fone" placeholder="Telefone" required>
+                    </div>
+                    <div class="group group-oab">
+                        <span>OAB</span>
+                        <input class="input oab-input" type="text" name="oab" placeholder="OAB" required>
+                    </div>
+                    <div class="group">
+                        <span>E-Mail</span>
+                        <input class="input" type="email" name="email" placeholder="E-mail" required>
+                    </div>
+                    <div class="group">
+                        <span>Senha</span>
+                        <div class="password-input">
+                            <input class="input" type="password" name="senha" placeholder="Senha" required>
+                        </div>
+
+
+                        <div class="group2">
+                            <center><button class="animated-button" type="submit">
+                                <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
+                                  <path
+                                    d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+                                  ></path>
+                                </svg>
+                                <span class="text">Cadastrar</span>
+                                <span class="circle"></span>
+                                <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
+                                  <path
+                                    d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+                                  ></path>
+                                </svg>
+                              </button></center>
+                            </div>
+                        
+                    </div>
+
+
+
+                    {% if msg %}
+                    <script>
+
+                        alert("{{ msg | safe }}");
+
+                    </script>
+                    {% endif %}
+                    
+                </div>
+            </div>
+        </form>
+    </section>
+    <script>
+        function triggerUpload() {
+            document.getElementById('upload-input').click();
+        }
+
+        $(document).ready(function(){
+            if (typeof $.fn.inputmask !== 'undefined') {
+                $('.cpf-input').inputmask('999.999.999-99');
+                $('.phone-input').inputmask('(99) 99999-9999');
+                $('.oab-input').inputmask('OAB-999999');
+            } else {
+                console.error("Inputmask is not loaded.");
+            }
+        });
+
+        var loadFile = function(event) {
+            var image = document.getElementById('profile-pic');
+            var icon = document.getElementById('upload-icon');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            image.style.display = 'block'; // Mostrar a imagem
+            icon.style.display = 'none'; // Esconder o ícone
+            image.onload = function() {
+                URL.revokeObjectURL(image.src); // free memory
+            }
+        };
+    </script>
+</body>
+</html>

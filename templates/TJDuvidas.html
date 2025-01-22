@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat TJ</title>
+  <link rel="stylesheet" href="../static/css/styleTJDuvidas.css">
+  <link rel="icon" href="{{ url_for('static', filename='images/Logo.png') }}" type="image/png">
+
+</head>
+<body>
+  <!-- Barra Lateral de Dúvidas Anteriores -->
+  <aside class="sidebar-doubts">
+      <header class="header">
+        <a href="/Home"> <!-- Link para a página inicial -->
+          <button>
+            <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024">
+              <path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path>
+            </svg>
+            <span>Voltar</span>
+          </button>
+        </a>
+        <h2>Nova dúvida</h2>
+        <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/a49e93cb35406b7d1300e3e1564cbcb88deb1ffe25fec24ed1647be82be7b544?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Adicionar dúvida" class="icon" />
+      </header>
+      
+        <section class="previous-doubts">
+          <h3>Dúvidas anteriores</h3>
+          <div class="doubts-list">
+            <li class="doubt-item">Redação de Contestação: Melhores Práticas e Dicas</li>
+            <li class="doubt-item">Maximizando sua Pesquisa Jurídica: Uso Eficaz de Ferramentas</li>
+            <li class="doubt-item">Recurso Especial perante o STJ: Critérios e Requisitos</li>
+            <li class="doubt-item">Irregularidades Processuais: Identificação e Correção</li>
+            <li class="doubt-item">Elaboração de Habeas Corpus: Pontos Chave</li>
+            <li class="doubt-item">Peça Inicial em Responsabilidade Civil: Abordagem</li>
+            <li class="doubt-item">Ação Rescisória: Critérios de Admissibilidade</li>
+            <li class="doubt-item">Interpretando o Novo CPC: Aplicação Prática</li>
+          </div>
+        </section>
+        
+        <footer class="sidebar-footer">
+          <div class="profile-info">
+            <img src="{{ user['image_url'] }}" alt="Foto de perfil de {{ user['name'] }}" class="profile-pic">
+            <div class="profile-text">
+              <p class="profile-name">{{ user['name'] }}</p>
+              <p class="profile-role">Administrador</p>
+            </div>
+          </div>
+        </footer>
+  </aside>
+
+  <!-- Conteúdo Principal com Área de Chat -->
+  <main class="main-content">
+    <!-- Seção inicial de perguntas e ícones (será ocultada ao enviar mensagem) -->
+    <div class="help-center" id="initial-content">
+      <div class="content-layout">
+        <!-- Coluna Esquerda com Caixas de Perguntas -->
+        <div class="question-column">
+          <div class="question-box">Quais são os requisitos específicos para a obtenção de uma medida liminar em uma ação cautelar?</div>
+          <div class="question-box">Cite os principais pontos a serem considerados ao elaborar uma peça de habeas corpus.</div>
+        </div>
+
+        <img src="../static/images/Balanca.png" alt="Ícone de Balança" class="scale-icon">
+
+        <div class="icon-container">
+          <div class="image-column">
+            <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/e18808577cf2a433c41e6864188006f73f991d80146df89891702c4d21564877?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Ilustração relacionada a recursos judiciais" class="question-image" />
+          </div>
+        </div>
+
+        <!-- Coluna Direita com Caixas de Perguntas -->
+        <div class="question-column">
+          <div class="question-box">Quais são os requisitos específicos para a formulação de um recurso especial perante o STJ?</div>
+          <div class="question-box">Quais são as principais diferenças entre um recurso de apelação e um recurso extraordinário?</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Área de Chat (exibida após o envio da primeira mensagem) -->
+    <div id="chat-container">
+      <div id="chat-messages">
+        <!-- As mensagens do chat aparecerão aqui -->
+      </div>
+    </div>
+
+    <div id="chat-input">
+      <div class="fileUploadWrapper">
+        <label for="file">
+          <svg viewBox="0 0 337 337" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="168.5" cy="168.5" r="158.5" fill="none" stroke="#6c6c6c" stroke-width="20"></circle>
+            <path d="M167.759 79V259" stroke="#6c6c6c" stroke-width="25" stroke-linecap="round"></path>
+            <path d="M79 167.138H259" stroke="#6c6c6c" stroke-width="25" stroke-linecap="round"></path>
+          </svg>
+          <span class="tooltip">Add an image</span>
+        </label>
+        <input name="file" id="file" type="file" />
+      </div>
+      <input id="messageInput" type="text" placeholder="Digite sua mensagem..." required />
+      <button id="sendButton">
+        <svg viewBox="0 0 664 663" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M646.293 331.888L17.7538 17.6187L155.245 331.888" fill="none"></path>
+          <path d="M646.293 331.888L17.753 646.157L155.245 331.888" stroke="#6c6c6c" stroke-width="33.67" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("sendButton").addEventListener("click", sendMessage);
+    
+    // Função para enviar mensagem
+    async function sendMessage() {
+      const messageInput = document.getElementById("messageInput");
+      const chatMessages = document.getElementById("chat-messages");
+      const initialContent = document.getElementById("initial-content");
+      const chatContainer = document.getElementById("chat-container");
+
+      if (messageInput.value.trim() === "") return;
+
+      // Oculta o conteúdo inicial e exibe o chat na primeira mensagem
+      if (initialContent.style.display !== "none") {
+        initialContent.style.display = "none";
+        chatContainer.style.display = "flex";
+      }
+
+      const userText = messageInput.value;
+      messageInput.value = "";
+
+      // Adiciona a mensagem do usuário ao chat
+      const userMessage = document.createElement("div");
+      userMessage.classList.add("message", "user");
+      userMessage.innerHTML = `<div class="message-bubble">${userText}</div>`;
+      chatMessages.appendChild(userMessage);
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userText })
+        });
+        const data = await response.json();
+
+        // Verifica se ocorreu um erro
+        if (data.error) {
+          throw new Error(data.error);
+        }
+
+        // Adiciona a resposta da IA ao chat
+        const aiMessage = document.createElement("div");
+        aiMessage.classList.add("message", "ai");
+        aiMessage.innerHTML = `<div class="message-bubble">${data.response}</div>`;
+        chatMessages.appendChild(aiMessage);
+
+        // Faz o scroll para a última mensagem
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      } catch (error) {
+        console.error("Erro ao buscar a resposta da IA:", error);
+        const errorMessage = document.createElement("div");
+        errorMessage.classList.add("message", "error");
+        errorMessage.innerHTML = `<div class="message-bubble">Desculpe, ocorreu um erro ao tentar obter uma resposta.</div>`;
+        chatMessages.appendChild(errorMessage);
+      }
+    }
+
+    // Carregar conversas anteriores ao carregar a página
+    document.addEventListener("DOMContentLoaded", async function() {
+    const chatMessages = document.getElementById("chat-messages");
+    const doubtsList = document.querySelector(".doubts-list");
+
+    try {
+        // Carregar as mensagens anteriores
+        const response = await fetch("/conversas");
+        const data = await response.json();
+
+        // Exibir as conversas na área de chat e na lista de dúvidas anteriores
+        data.forEach(conversa => {
+            // Adicionar a conversa na área de chat (se necessário)
+            const userMessage = document.createElement("div");
+            userMessage.classList.add("message", "user");
+            userMessage.innerHTML = `
+                <div class="message-bubble">${conversa.mensagem}</div>
+                <div class="message-time">${conversa.data_hora}</div>
+            `;
+            chatMessages.appendChild(userMessage);
+
+            const aiMessage = document.createElement("div");
+            aiMessage.classList.add("message", "ai");
+            aiMessage.innerHTML = `
+                <div class="message-bubble">${conversa.resposta}</div>
+                <div class="message-time">${conversa.data_hora}</div>
+            `;
+            chatMessages.appendChild(aiMessage);
+
+            // Adicionar a conversa na lista de dúvidas anteriores
+            const doubtItem = document.createElement("li");
+            doubtItem.classList.add("doubt-item");
+            doubtItem.textContent = `${conversa.mensagem} - ${conversa.data_hora}`;
+            doubtsList.appendChild(doubtItem);
+        });
+    } catch (error) {
+        console.error("Erro ao carregar conversas anteriores:", error);
+    }
+});
+  </script>
+</body>
+</html>
