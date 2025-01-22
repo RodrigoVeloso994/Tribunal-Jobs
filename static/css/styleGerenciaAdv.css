@@ -1,0 +1,964 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+  background-color: #efefef;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Estilos gerais da seção de busca */
+.patient-search {
+  background-color: #efefef;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  width: 100%;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1131px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Barra de busca */
+.search-bar {
+  background-color: #e8e8e8;
+  border-radius: 10px;
+  display: flex;
+  width: 100%;
+  max-width: 593px;
+  gap: 15px;
+  align-items: center;
+  padding: 14px 20px;
+  margin: 0 auto;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.search-button {
+  width: 24px;
+  height: 24px;
+}
+
+/* Grid de pacientes */
+.patient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.patient-card {
+  background-color: #e0e0e0;
+  border-radius: 30px;
+  box-shadow: 15px 15px 30px #bebebe, -15px -15px 30px #ffffff;
+  display: flex;
+  padding: 20px;
+  gap: 15px;
+  align-items: center;
+}
+
+.patient-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.patient-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.patient-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.patient-details {
+  font-size: 13px;
+  color: #555;
+}
+
+.case-type {
+  font-size: 14px;
+  color: #1a4273;
+  font-weight: 500;
+}
+
+/* Botões de ação */
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.register-button,
+.help-button {
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-button {
+  background-color: #1a4273;
+}
+
+.register-button:hover {
+  background-color: #163554;
+}
+
+.help-button {
+  background-color: #dfc18c;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.help-button:hover {
+  background-color: #c5a96e;
+}
+
+.help-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Acessibilidade e estilo oculto */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* From Uiverse.io by satyamchaudharydev */ 
+/* From uiverse.io by @satyamchaudharydev */
+/* this button is inspired by -- whatsapp input */
+/* == type to see fully interactive and click the close buttom to remove the text  == */
+
+.form {
+  --input-bg: #FFf;
+ /*  background of input */
+  --padding: 1.5em;
+  --rotate: 80deg;
+ /*  rotation degree of input*/
+  --gap: 2em;
+  /*  gap of items in input */
+  --icon-change-color: #15A986;
+ /*  when rotating changed icon color */
+  --height: 40px;
+ /*  height */
+  width: 600px;
+  padding-inline-end: 1em;
+ /*  change this for padding in the end of input */
+  background: var(--input-bg);
+  position: relative;
+  border-radius: 4px;
+}
+
+.form label {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--height);
+}
+
+.form input {
+  width: 100%;
+  padding-inline-start: calc(var(--padding) + var(--gap));
+  outline: none;
+  background: none;
+  border: 0;
+}
+/* style for both icons -- search,close */
+.form svg {
+  /* display: block; */
+  color: #111;
+  transition: 0.3s cubic-bezier(.4,0,.2,1);
+  position: absolute;
+  height: 15px;
+}
+/* search icon */
+.icon {
+  position: absolute;
+  left: var(--padding);
+  transition: 0.3s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* arrow-icon*/
+.swap-off {
+  transform: rotate(-80deg);
+  opacity: 0;
+  visibility: hidden;
+}
+/* close button */
+.close-btn {
+  /* removing default bg of button */
+  background: none;
+  border: none;
+  right: calc(var(--padding) - var(--gap));
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111;
+  padding: 0.1em;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  transition: 0.3s;
+  opacity: 0;
+  transform: scale(0);
+  visibility: hidden;
+}
+
+.form input:focus ~ .icon {
+  transform: rotate(var(--rotate)) scale(1.3);
+}
+
+.form input:focus ~ .icon .swap-off {
+  opacity: 1;
+  transform: rotate(-80deg);
+  visibility: visible;
+  color: var(--icon-change-color);
+}
+
+.form input:focus ~ .icon .swap-on {
+  opacity: 0;
+  visibility: visible;
+}
+
+.form input:valid ~ .icon {
+  transform: scale(1.3) rotate(var(--rotate))
+}
+
+.form input:valid ~ .icon .swap-off {
+  opacity: 1;
+  visibility: visible;
+  color: var(--icon-change-color);
+}
+
+.form input:valid ~ .icon .swap-on {
+  opacity: 0;
+  visibility: visible;
+}
+
+.form input:valid ~ .close-btn {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition: 0s;
+}
+
+/* Estilos gerais */
+body {
+  font-family: 'Noto Sans', sans-serif;
+  background-color: #efefef;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+
+}
+
+/* Estilos da seção de busca */
+.patient-search {
+  background-color: #efefef;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  width: 100%;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1131px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Campo de busca centralizado no topo */
+.form {
+  --input-bg: #fff;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px; /* Espaço abaixo do campo de busca */
+  padding-inline-end: 1em;
+  background: var(--input-bg);
+  position: relative;
+  border-radius: 4px;
+}
+
+/* Grid de pacientes */
+.patient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Estilo do link de cada cartão de paciente */
+.patient-card-link {
+  text-decoration: none; /* Remove a decoração de link */
+  color: inherit; /* Mantém a cor do texto do cartão */
+}
+
+/* Estilo do cartão de paciente */
+.patient-card {
+  background-color: #e0e0e0;
+  border-radius: 30px;
+  box-shadow: 15px 15px 30px #bebebe, -15px -15px 30px #ffffff;
+  display: flex;
+  padding: 20px;
+  gap: 15px;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.patient-card:hover {
+  transform: scale(1.05); /* Aumenta o cartão quando hover */
+  box-shadow: 20px 20px 40px #bebebe, -20px -20px 40px #ffffff;
+
+}
+
+
+
+.texturaB {
+  position: fixed;
+  bottom: 0;
+  left: 283px;
+  width: auto; /* Ajuste o tamanho conforme necessário */
+  height: auto; /* Mantém a proporção da imagem */
+  z-index: 1000; /* Ajuste o z-index conforme necessário */
+}
+
+.texturaC {
+  position: fixed;
+  top: 0;
+  right:  0;
+  width: auto; /* Ajuste o tamanho conforme necessário */
+  height: auto; /* Mantém a proporção da imagem */
+  z-index: 1000; /* Ajuste o z-index conforme necessário */
+}
+
+/* Barra no topo para o botão de Voltar */
+.top-bar {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000; /* Garantir que fique acima do conteúdo */
+}
+
+/* Estilos do botão de Voltar */
+button {
+ display: flex;
+ height: 3em;
+ width: 100px;
+ align-items: center;
+ justify-content: center;
+ background-color: #eeeeee4b;
+ border-radius: 3px;
+ letter-spacing: 1px;
+ transition: all 0.2s linear;
+ cursor: pointer;
+ border: none;
+ background: #fff;
+}
+
+button > svg {
+ margin-right: 5px;
+ margin-left: 5px;
+ font-size: 20px;
+ transition: all 0.4s ease-in;
+}
+
+button:hover > svg {
+ font-size: 1.2em;
+ transform: translateX(-5px);
+}
+
+button:hover {
+ box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
+ transform: translateY(-2px);
+}
+
+.action-buttons a.register-button,
+.action-buttons a.help-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.action-buttons a.register-button {
+  background-color: #1a4165;
+  color: white;
+}
+
+.action-buttons a.help-button {
+  background-color: #d4d4d4;
+  color: black;
+}
+
+.help-icon {
+  margin-right: 8px;
+}
+
+/* Estilos dos botões */
+.action-buttons a.register-button,
+.action-buttons a.help-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Botão de cadastro de clientes */
+.action-buttons a.register-button {
+  background-color: #1a4165;
+  color: white;
+}
+
+/* Botão de ajuda */
+.action-buttons a.help-button {
+  background-color: #dfc18c;
+  color: black;
+}
+
+.help-icon {
+  margin-right: 8px;
+  transition: transform 0.3s ease;
+}
+
+/* Animação de Hover */
+.action-buttons a.register-button:hover {
+  background-color: #153050;
+  transform: scale(1.05);
+}
+
+.action-buttons a.help-button:hover {
+  background-color: #c5a96e;
+  transform: scale(1.05);
+}
+
+.action-buttons a:hover .help-icon {
+  transform: rotate(15deg);
+}
+
+/* From Uiverse.io by aaronross1 */ 
+.edit-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #1a4165;
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none !important;
+}
+
+.edit-svgIcon {
+  width: 17px;
+  transition-duration: 0.3s;
+}
+
+.edit-svgIcon path {
+  fill: white;
+}
+
+.edit-button:hover {
+  width: 120px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
+  background-color: rgb(255, 69, 69);
+  align-items: center;
+}
+
+.edit-button:hover .edit-svgIcon {
+  width: 20px;
+  transition-duration: 0.3s;
+  transform: translateY(60%);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+
+.edit-button::before {
+  display: none;
+  content: "Editar";
+  color: white;
+  transition-duration: 0.3s;
+  font-size: 2px;
+}
+
+.edit-button:hover::before {
+  display: block;
+  padding-right: 10px;
+  font-size: 13px;
+  opacity: 1;
+  transform: translateY(0px);
+  transition-duration: 0.3s;
+}
+
+/* From Uiverse.io by aaronross1 */ 
+
+.editt-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #1a4165;
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none !important;
+}
+
+.editt-svgIcon {
+  width: 17px;
+  transition-duration: 0.3s;
+}
+
+.editt-svgIcon path {
+  fill: white;
+}
+
+.editt-button:hover {
+  width: 120px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
+  background-color: rgb(255, 69, 69);
+  align-items: center;
+}
+
+.editt-button:hover .editt-svgIcon {
+  width: 20px;
+  transition-duration: 0.3s;
+  transform: translateY(60%);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+
+.editt-button::before {
+  display: none;
+  content: "Excluir";
+  color: white;
+  transition-duration: 0.3s;
+  font-size: 2px;
+}
+
+.editt-button:hover::before {
+  display: block;
+  padding-right: 10px;
+  font-size: 13px;
+  opacity: 1;
+  transform: translateY(0px);
+  transition-duration: 0.3s;
+}
+
+.patient-actions {
+  display: flex; /* Habilita o Flexbox */
+  gap: 10px; /* Espaçamento entre os botões */
+  justify-content: center; /* Alinha os botões à esquerda (ou altere conforme necessário) */
+  align-items: center; /* Centraliza verticalmente os botões */
+  margin-top: 15px;
+}
+
+.sidebar {
+  background-color: #1A4165;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #7b7b7b;
+  padding: 42px 0 26px;
+  width: 100%;
+  max-width: 283px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  padding: 0 20px;
+  text-align: center;
+  padding-bottom: 45px;
+}
+
+.profile-imagee {
+  width: 100%;
+  max-width: 160px;
+  border: 4px solid #dfc18c;
+  border-radius: 50%;
+}
+
+.profile-name {
+  margin: 18px 0 0;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.profile-role {
+  margin-top: 9px;
+  font-weight: 300;
+  font-size: 12px;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.nav-item {
+  width: 100%;
+}
+
+.nav-item a {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  background-color: #1a4165;
+  position: relative;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-item.active a,
+.nav-item a:hover {
+  background-color: #1a4273;
+  color: #dfc18c;
+}
+
+.nav-item.active a::before,
+.nav-item a:hover::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: #dfc18c;
+}
+
+.nav-icon {
+  margin-right: 10px;
+}
+
+.logout {
+  margin-top: auto;
+  padding: 20px;
+}
+
+.logout a {
+  border-radius: 7px;
+  background-color: #e4e3e3;
+  color: #000;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 9px 11px;
+  text-decoration: none;
+}
+
+.logout a:hover {
+  background-color: #d4d4d4;
+}
+
+.logout a .nav-icon {
+  fill: #eb5757;
+}
+
+.Btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition-duration: 0.3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+  background-color: rgb(255, 65, 65);
+  z-index: 8;
+}
+
+.sign {
+  width: 100%;
+  transition-duration: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign svg {
+  width: 17px;
+}
+
+.sign svg path {
+  fill: white;
+}
+
+.text {
+  position: absolute;
+  right: 0%;
+  width: 0%;
+  opacity: 0;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 600;
+  transition-duration: 0.3s;
+}
+
+.Btn:hover {
+  width: 125px;
+  border-radius: 40px;
+  transition-duration: 0.3s;
+}
+
+.Btn:hover .sign {
+  width: 30%;
+  transition-duration: 0.3s;
+  padding-left: 5px;
+}
+
+.Btn:hover .text {
+  opacity: 1;
+  width: 70%;
+  transition-duration: 0.3s;
+  padding-right: 5px;
+}
+
+.Btn:active {
+  transform: translate(2px, 2px);
+}
+
+.main-content {
+  /* Largura da sidebar */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% - 250px);
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+
+
+@media (max-width: 768px) {
+  .sidebar {
+      max-width: 100%;
+      height: auto;
+  }
+  .profile-section, .nav-item a, .logout a {
+      padding: 10px;
+  }
+  .nav-item a {
+      font-size: 12px;
+  }
+  .profile-name {
+      font-size: 14px;
+  }
+  .profile-role {
+      font-size: 10px;
+  }
+  .justice-image {
+      left: 20px;
+      width: 60%;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+      max-width: 100%;
+      height: auto;
+  }
+  .profile-section, .nav-item a, .logout a {
+      padding: 10px;
+  }
+  .nav-item a {
+      font-size: 12px;
+  }
+  .profile-name {
+      font-size: 14px;
+  }
+  .profile-role {
+      font-size: 10px;
+  }
+  .justice-image {
+      left: 10px;
+      width: 80%;
+  }
+}
+
+.sidebar {
+  background-color: #1A4165;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #7b7b7b;
+  padding: 42px 0 26px;
+  width: 100%;
+  max-width: 283px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  padding: 0 20px;
+  text-align: center;
+  padding-bottom: 45px;
+}
+
+.profile-imagee {
+  width: 100%;
+  max-width: 160px;
+  border: 4px solid #dfc18c;
+  border-radius: 50%;
+}
+
+.profile-imagee {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.profile-name {
+  margin: 18px 0 0;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.profile-role {
+  margin-top: 9px;
+  font-weight: 300;
+  font-size: 12px;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.nav-item {
+  width: 100%;
+  margin: 15px 0;
+  background-color: #1a416500;
+}
+
+.nav-item a {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  background-color: #1a4165;
+  position: relative;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-item.active a,
+.nav-item a:hover {
+  background-color: #1a4273;
+  color: #dfc18c;
+}
+
+.nav-item.active a::before,
+.nav-item a:hover::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: #dfc18c;
+}
+
+.nav-icon {
+  margin-right: 10px;
+}
